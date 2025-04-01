@@ -60,7 +60,7 @@ jobs:
       - name: Upload Artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: publish
+          path: publish/wwwroot
 
       - name: Deploy GitHub Pages site
         uses: actions/deploy-pages@v4
