@@ -24,7 +24,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish solution
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish PV260Demo.App/PV260Demo.App.csproj -c Release -o ./publish
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
