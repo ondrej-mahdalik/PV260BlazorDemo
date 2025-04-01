@@ -1,0 +1,43 @@
+# github action to build blazor webassembly app
+name: Build and Test
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Setup .NET Blazor workload
+        run: dotnet workload install wasm-tools
+
+      - name: Publish solution
+        run: dotnet publish PV260Demo.App/PV260Demo.App.csproj -c Release -o ./publish
+
+      - name: Publish artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: publish
+          name: PV260Demo
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Run tests
+        run: dotnet test PV260Demo.Tests/PV260Demo.Tests.csproj
